@@ -8,22 +8,38 @@ public class ArrayMapTest {
     public static void main(String[] args) {
         Faker faker = new Faker();
         Random rnd = new Random();
+        // arrayMap is array of objects "Person" with Key is "phone"
         ArrayMap<Person,String> arrayMap = new ArrayMap<>();
 
-
-        for (int i = 0; i < 20; i++) {
-            String phone = faker.phoneNumber().cellPhone();
-            arrayMap.add((new Person(phone, faker.name().lastName(), rnd.nextInt(15, 80))),phone);
+        //Create arrayMap elements with random dates
+        int maxElements = 10;
+        int indexRnd = rnd.nextInt(0, maxElements);
+        System.out.println("indexRnd = " + indexRnd);
+        String phoneRnd = "";
+        String phone;
+        for (int i = 0; i < maxElements; i++) {
+            phone = faker.phoneNumber().cellPhone();
+            if (i == indexRnd) phoneRnd = phone;
+            // arrayMap is array of objects "Person" with Key is "phone"
+            arrayMap.add((new Person(faker.name().lastName(), phone, rnd.nextInt(15, 80))),phone);
         }
 
+        //Test of contains the elements with given key
+        if (arrayMap.contains(phoneRnd)) {
+            System.out.println("Element with phone: " + phoneRnd + " exist in the array");
+            System.out.println("Index of element with phone: " + phoneRnd + " is: " + arrayMap.findIndex(phoneRnd));
+        }
+        else System.out.println("Element with phone: " + phoneRnd + " is not contains in arrayMap");
+
+        // Search elements of arrayMap with max Age
         Person perMaxAge = arrayMap.get(0);
-        for(Person per: arrayMap) {
-            if (perMaxAge.getAge() <= per.getAge()) perMaxAge = per;
+        for(Person pers: arrayMap) {
+            if (perMaxAge.getAge() <= pers.getAge()) perMaxAge = pers;
         }
-
         System.out.println("Element with max Age: " + perMaxAge);
-        System.out.println("Index of this element: " + arrayMap.indexKey(perMaxAge.getPhoneNumber()));
+        System.out.println("Index of this element: " + arrayMap.findIndex(perMaxAge.getPhoneNumber()));
 
+        System.out.println("=========================================================");
         System.out.println(arrayMap);
 
     }

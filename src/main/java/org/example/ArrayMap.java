@@ -20,10 +20,9 @@ public class ArrayMap<T,K> implements ListMap<T,K>, Iterable<T>{
 
 
     @Override
-    public void add(T el, K mpKey) {
-        elements.add(el);
-//        elements.lastIndexOf(el);
-        mapElements.put(mpKey, index++);
+    public boolean add(T el, K key) {
+        mapElements.put(key, index++);
+        return elements.add(el);
      }
 
     @Override
@@ -32,18 +31,19 @@ public class ArrayMap<T,K> implements ListMap<T,K>, Iterable<T>{
     }
 
     @Override
-    public T get(K mpKey) {
-        return elements.get(mapElements.get(mpKey));
-    }
-
-    @Override
-    public void put(Integer indexId, T el) {
+    public void put(Integer indexId, T el, K key) {
         elements.add(indexId, el);
+        mapElements.put(key, indexId);
     }
 
     @Override
-    public Integer indexKey(K mpKey) {
-        return mapElements.get(mpKey);
+    public boolean contains(K key) {
+        return  mapElements.containsKey(key);
+    }
+
+    @Override
+    public Integer findIndex(K key) {
+        return mapElements.get(key);
     }
 
     @Override
@@ -64,13 +64,6 @@ public class ArrayMap<T,K> implements ListMap<T,K>, Iterable<T>{
         };
     }
 
-//    @Override
-//    public String toString() {
-//        return "ArrayMap{" +
-//                "elements=" + elements +
-//                ", mapElements=" + mapElements +
-//                '}';
-//    }
 
     @Override
     public String toString() {

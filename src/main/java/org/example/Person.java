@@ -3,18 +3,19 @@ package org.example;
 import java.util.UUID;
 
 public class Person {
-    private String phoneNumber;
+
     private String name;
+    private String phone;
     private int age;
 
-    public Person(String phoneNumber, String name, int age) {
-        this.phoneNumber = phoneNumber;
+    public Person(String name, String phone, int age) {
         this.name = name;
+        this.phone = phone;
         this.age = age;
     }
 
     public String getPhoneNumber() {
-        return phoneNumber;
+        return phone;
     }
 
     public String getName() {
@@ -28,8 +29,8 @@ public class Person {
     @Override
     public String toString() {
         return "Person{" +
-                "phoneNumber=" + phoneNumber +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
                 ", age=" + age +
                 '}';
     }
