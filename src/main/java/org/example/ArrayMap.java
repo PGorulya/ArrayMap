@@ -1,16 +1,13 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
-public class ArrayMap<T,K> implements ListMap<T,K>, Iterable<T>{
+public class ArrayMap<T, K> implements Iterable<T> {
 
-    private List<T> elements;
-    private HashMap<K, Integer> mapElements;
+    private final List<T> elements;
+    private final Map<K, Integer> mapElements;
 
-    Integer index = 0;
+    int size = 0;
 
     public ArrayMap() {
         elements = new ArrayList<>();
@@ -18,33 +15,120 @@ public class ArrayMap<T,K> implements ListMap<T,K>, Iterable<T>{
     }
 
 
+    /**
+     * Appends the specified element to the end of this list.
+     *
+     * @param el element to be appended to this list
+     * @return {@code true} (as specified by {@link Collection#add})
+     */
 
-    @Override
     public boolean add(T el, K key) {
-        mapElements.put(key, index++);
-        return elements.add(el);
-     }
-
-    @Override
-    public T get(Integer indexId) {
-        return elements.get(indexId);
+        if (contains(key)) {
+            //replace elements by index = map.get(key)
+            elements.set(mapElements.get(key), el);
+            return true;
+        }
+        else {
+            mapElements.put(key, size++);
+            return elements.add(el);
+        }
     }
 
-    @Override
-    public void put(Integer indexId, T el, K key) {
-        elements.add(indexId, el);
-        mapElements.put(key, indexId);
+    /**
+     * Returns the element at the specified position in this list.
+     *
+     * @param index index of the element to return
+     * @return the element at the specified position in this list
+     * @throws IndexOutOfBoundsException {@inheritDoc}
+     */
+    public T get(Integer index) {
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException();
+        } else return elements.get(index);
     }
 
-    @Override
+    public T get(K key) {
+        int ind = mapElements.get(key);
+        return elements.get(ind);
+    }
+
+    /**
+     * Replaces the element at the specified position in this list with
+     * the specified element.
+     *
+     * @param index index of the element to replace
+     * @param el      element to be stored at the specified position
+     * @throws IndexOutOfBoundsException {@inheritDoc}
+     */
+    public void set(Integer index, T el, K newKey, K oldKey) {
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException();
+        } else {
+            elements.set(index, el);
+            mapElements.remove(oldKey);
+            mapElements.put(newKey, index);
+        }
+    }
+
+    /**
+     * Returns {@code true} if this list contains the specified element.
+     */
     public boolean contains(K key) {
-        return  mapElements.containsKey(key);
+        return mapElements.containsKey(key);
     }
 
-    @Override
+    /**
+     * Returns the index of the last occurrence of the specified element
+     * in this list, or -1 if this list does not contain the element.
+     */
     public Integer findIndex(K key) {
-        return mapElements.get(key);
+        return mapElements.getOrDefault(key, -1);
     }
+
+    /**
+     * Returns the number of elements in this list.
+     *
+     * @return the number of elements in this list
+     */
+    public int size() {
+        return size;
+    }
+
+    /**
+     * Remove the specified element to the end of this list.
+     *
+     * @param el element to be appended to this list
+     * @return {@code true} (as specified by {@link Collection#add})
+     */
+    public boolean remove(T el, K key) {
+        mapElements.remove(key);
+        size--;
+        return elements.remove(el);
+    }
+
+    public boolean remove(Integer index, K key) {
+        mapElements.remove(key);
+        size--;
+        return elements.remove(index);
+    }
+
+    /**
+     * Returns {@code true} if this list contains no elements.
+     *
+     * @return {@code true} if this list contains no elements
+     */
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    /**
+     * Clear of all elements
+     */
+    public void clear() {
+        elements.clear();
+        mapElements.clear();
+    }
+
 
     @Override
     public Iterator<T> iterator() {
@@ -54,7 +138,7 @@ public class ArrayMap<T,K> implements ListMap<T,K>, Iterable<T>{
 
             @Override
             public boolean hasNext() {
-                return pointer < index;
+                return pointer < size;
             }
 
             @Override
@@ -68,7 +152,7 @@ public class ArrayMap<T,K> implements ListMap<T,K>, Iterable<T>{
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("ArrayMap\n[elements:\n");
-        for (int i = 0; i < index; i++) {
+        for (int i = 0; i < size; i++) {
             sb.append(elements.get(i)).append(", \n");
         }
         sb.append("]\n[mapElements:\n");

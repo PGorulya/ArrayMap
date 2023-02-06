@@ -1,12 +1,11 @@
 package org.example;
 
-import java.util.UUID;
 
 public class Person {
 
-    private String name;
-    private String phone;
-    private int age;
+    private final String name;
+    private final String phone;
+    private final int age;
 
     public Person(String name, String phone, int age) {
         this.name = name;
