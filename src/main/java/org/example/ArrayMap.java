@@ -2,7 +2,7 @@ package org.example;
 
 import java.util.*;
 
-public class ArrayMap<T, K> implements Iterable<T> {
+public class ArrayMap<K, T> implements Iterable<T>{
 
     private final List<T> elements;
     private final Map<K, Integer> mapElements;
@@ -22,7 +22,7 @@ public class ArrayMap<T, K> implements Iterable<T> {
      * @return {@code true} (as specified by {@link Collection#add})
      */
 
-    public boolean add(T el, K key) {
+    public boolean add(K key, T el) {
         if (contains(key)) {
             //replace elements by index = map.get(key)
             elements.set(mapElements.get(key), el);
@@ -34,6 +34,17 @@ public class ArrayMap<T, K> implements Iterable<T> {
         }
     }
 
+    public boolean put(K key, T el) {
+        if (contains(key)) {
+            //replace elements by index = map.get(key)
+            elements.set(mapElements.get(key), el);
+            return true;
+        }
+        else {
+            mapElements.put(key, size++);
+            return elements.add(el);
+        }
+    }
     /**
      * Returns the element at the specified position in this list.
      *
@@ -100,13 +111,13 @@ public class ArrayMap<T, K> implements Iterable<T> {
      * @param el element to be appended to this list
      * @return {@code true} (as specified by {@link Collection#add})
      */
-    public boolean remove(T el, K key) {
+    public boolean remove(K key, T el) {
         mapElements.remove(key);
         size--;
         return elements.remove(el);
     }
 
-    public boolean remove(Integer index, K key) {
+    public boolean remove(K key, Integer index) {
         mapElements.remove(key);
         size--;
         return elements.remove(index);
@@ -156,7 +167,7 @@ public class ArrayMap<T, K> implements Iterable<T> {
             sb.append(elements.get(i)).append(", \n");
         }
         sb.append("]\n[mapElements:\n");
-        mapElements.forEach((k, v) -> sb.append("Key= " + k + ", Value= " + v + "\n"));
+        mapElements.forEach((k, v) -> sb.append("Key= " + k + ", Index= " + v + "\n"));
         sb.append("]");
         return sb.toString();
     }

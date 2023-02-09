@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ArrayMapTest {
 
-    ArrayMap<Person, String> arrayMap = new ArrayMap<>();
+    ArrayMap<String, Person> arrayMap = new ArrayMap<>();
 
     Person person1 = new Person("Hemmer", "4917732567", 32);
     Person person2 = new Person("Neitzel", "4915756322", 47);
@@ -18,9 +18,9 @@ class ArrayMapTest {
 
     @BeforeEach
     void setUp() {
-        arrayMap.add(person1,"4917732567" );
-        arrayMap.add(person2,"4915756322" );
-        arrayMap.add(person3,"4917702870" );
+        arrayMap.add("4917732567", person1 );
+        arrayMap.add("4915756322", person2);
+        arrayMap.add("4917702870", person3 );
 
     }
 
@@ -32,13 +32,24 @@ class ArrayMapTest {
 
     @Test
     void add() {
-        arrayMap.add(new Person("Brown", "4915502546", 28),"4915502546" );
+        arrayMap.add("4915502546", new Person("Brown", "4915502546", 28));
         Assertions.assertEquals(4,arrayMap.size(),"Check Add");
     }
 
     @Test
     void addIfKeyExist() {
-        arrayMap.add(new Person("Brown", "4917732567", 28),"4917732567" );
+        arrayMap.add("4917732567", new Person("Brown", "4917732567", 28));
+        Assertions.assertEquals(3,arrayMap.size(),"Check Add If key exist");
+    }
+
+    void put() {
+        arrayMap.put("4915502546", new Person("Brown", "4915502546", 28));
+        Assertions.assertEquals(4,arrayMap.size(),"Check Add");
+    }
+
+    @Test
+    void putIfKeyExist() {
+        arrayMap.put("4917732567", new Person("Brown", "4917732567", 28));
         Assertions.assertEquals(3,arrayMap.size(),"Check Add If key exist");
     }
 
@@ -93,7 +104,7 @@ class ArrayMapTest {
 
     @Test
     void removeByIndex() {
-        arrayMap.remove(2, "4917702870");
+        arrayMap.remove("4917702870", 2);
         Assertions.assertEquals(2, arrayMap.size(), "Check remove");
         Assertions.assertFalse(arrayMap.contains("4917702870"));
     }

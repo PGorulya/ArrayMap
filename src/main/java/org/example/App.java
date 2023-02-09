@@ -4,12 +4,13 @@ import com.github.javafaker.Faker;
 
 import java.util.Random;
 
+// Examples of some ArrayMap methods
 public class App {
     public static void main(String[] args) {
         Faker faker = new Faker();
         Random rnd = new Random();
         // arrayMap is array of objects "Person" with Key is "phone"
-        ArrayMap<Person, String> arrayMap = new ArrayMap<>();
+        ArrayMap<String, Person> arrayMap = new ArrayMap<>();
 
         //Create arrayMap elements with random dates
         int maxElements = 10;
@@ -21,7 +22,7 @@ public class App {
             phone = faker.phoneNumber().cellPhone();
             if (i == indexRnd) phoneRnd = phone;
             // arrayMap is array of objects "Person" with Key is "phone"
-            arrayMap.add((new Person(faker.name().lastName(), phone, rnd.nextInt(15, 80))), phone);
+            arrayMap.add(phone, (new Person(faker.name().lastName(), phone, rnd.nextInt(15, 80))));
         }
 
         System.out.println("Size of arrayMap = " + arrayMap.size());
@@ -35,11 +36,11 @@ public class App {
         // remove element with key = phoneRnd
         System.out.println("Remove element with phone: " + phoneRnd);
         int idx = arrayMap.findIndex(phoneRnd);
-        arrayMap.remove(idx,phoneRnd);
+        arrayMap.remove(phoneRnd, idx);
         System.out.println("Size after removing = " + arrayMap.size());
 
-        // Example of Using foreach cycle
-        // Search elements of arrayMap with max Age
+        // Example of Using "for" cycle
+        // Search the element of arrayMap with max Age
         Person perMaxAge = arrayMap.get(0);
         for (Person pers : arrayMap) {
             if (perMaxAge.getAge() <= pers.getAge()) perMaxAge = pers;
