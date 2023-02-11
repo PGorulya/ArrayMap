@@ -11,29 +11,16 @@ public class ArrayMap<K, T> implements Iterable<T>{
 
     public ArrayMap() {
         elements = new ArrayList<>();
-        mapElements = new HashMap<>();
+        mapElements = new LinkedHashMap<>();
     }
 
 
     /**
-     * Appends the specified element to the end of this list.
+     * Appends the specified element to the Map.
      *
      * @param el element to be appended to this list
      * @return {@code true} (as specified by {@link Collection#add})
      */
-
-    public boolean add(K key, T el) {
-        if (contains(key)) {
-            //replace elements by index = map.get(key)
-            elements.set(mapElements.get(key), el);
-            return true;
-        }
-        else {
-            mapElements.put(key, size++);
-            return elements.add(el);
-        }
-    }
-
     public boolean put(K key, T el) {
         if (contains(key)) {
             //replace elements by index = map.get(key)
@@ -86,6 +73,10 @@ public class ArrayMap<K, T> implements Iterable<T>{
      */
     public boolean contains(K key) {
         return mapElements.containsKey(key);
+    }
+
+    public Set<K> keySet() {
+        return mapElements.keySet();
     }
 
     /**

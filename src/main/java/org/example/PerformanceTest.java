@@ -28,14 +28,13 @@ public class PerformanceTest {
             phone = faker.phoneNumber().cellPhone();
             if (i == indexRnd) phoneRnd = phone;
             // arrayMap is Map of Keys = "phone" and values = "Person"
-            arrayMap.put(phone, (new Person(faker.name().lastName(), phone, rnd.nextInt(15, 80))));
+            arrayMap.put(phone, (new Person(faker.name().lastName(), rnd.nextInt(15, 80))));
 
             // linkedHashMap is Map of Keys = "phone" and values = "Person"
-            linkedHashMap.put(phone, (new Person(faker.name().lastName(), phone, rnd.nextInt(15, 80))));
+            linkedHashMap.put(phone, (new Person(faker.name().lastName(), rnd.nextInt(15, 80))));
         }
 
         System.out.println("Size of arrayMap = " + arrayMap.size());
-//        System.out.println(arrayMap);
         System.out.println("=========================================================");
 
         // Example1 for arrayMap:
@@ -48,13 +47,8 @@ public class PerformanceTest {
         long end = System.currentTimeMillis();
         System.out.println("Time of searching for arrayMap = " + (end -start));
         System.out.println("Element with max Age (in arrayMap): " + perMaxAge);
-        System.out.println("Index of this element: " + arrayMap.findIndex(perMaxAge.getPhoneNumber()));
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 
-
-//        linkedHashMap.entrySet().forEach( entry -> {
-//            System.out.println(entry.getKey() + "=>" + entry.getValue());
-//        });
         System.out.println("=========================================================");
         System.out.println("Size of linkedHashMap = " + linkedHashMap.size());
 
@@ -71,13 +65,6 @@ public class PerformanceTest {
         end = System.currentTimeMillis();
         System.out.println("Time of searching for linkedHashMap = " + (end - start));
         System.out.println("Element with max Age (in linkedHashMap): " + perMaxAge1);
-
-        int index = 0;
-        for(String phon: listPhones) {
-            if(linkedHashMap.get(phon).equals(perMaxAge1)) break;
-            index++;
-        }
-        System.out.println("Index of this element: " + index);
 
     }
 }

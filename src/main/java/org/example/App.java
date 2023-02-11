@@ -4,6 +4,7 @@ import com.github.javafaker.Faker;
 
 import java.util.Random;
 
+
 // Examples of some ArrayMap methods
 public class App {
     public static void main(String[] args) {
@@ -22,7 +23,7 @@ public class App {
             phone = faker.phoneNumber().cellPhone();
             if (i == indexRnd) phoneRnd = phone;
             // arrayMap is array of objects "Person" with Key is "phone"
-            arrayMap.add(phone, (new Person(faker.name().lastName(), phone, rnd.nextInt(15, 80))));
+            arrayMap.put(phone, (new Person(faker.name().lastName(), rnd.nextInt(15, 80))));
         }
 
         System.out.println("Size of arrayMap = " + arrayMap.size());
@@ -46,7 +47,6 @@ public class App {
             if (perMaxAge.getAge() <= pers.getAge()) perMaxAge = pers;
         }
         System.out.println("Element with max Age: " + perMaxAge);
-        System.out.println("Index of this element: " + arrayMap.findIndex(perMaxAge.getPhoneNumber()));
 
         System.out.println("=========================================================");
         System.out.println(arrayMap);

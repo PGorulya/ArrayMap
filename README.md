@@ -2,51 +2,48 @@
 
 
 Класс ArrayMap - это параметризированный wrapped-класс,
-созданный на основе двух структур - ArrayList и HashMap. 
+созданный на основе двух структур - ArrayList и LinkedHashMap.
 
-Он обладает дуальными особенностми:
-
-С одной стороны ArrayMap по сравнению с HashMap имеет
-  следующие дополнительные характеристики:
-- упорядоченность значений элементов Map-ы.
+ArrayMap по сравнению с LinkedHashMap имеет следующие 
+дополнительные возможности:
+- обращение к значениям элементов Map-ы через индексы.
 - имплементация интерфейса iterable (с возможностью исполь-
   зовать цикл "for" по элементам).
-- обращение к знаениям элементов Map-ы через индексы.
 
-С другой стороны ArrayMap по сревнению с ArrayList обладает
-  следующими дополнительными возможностями:
-- определение существования жлемента списка по значению
-  поля ключей (со сложностью О(1)).
-- определение индекса элемента списка по значению поля
-  ключей (со сложностью О(1)).
+В результате, ArrayMap подобен LinkedHashMap, но с более быстрым
+и удобным доступом к значениям элементов Мар-ы.
+
+В PerformanceTest демонстрируется преимущество ArrayMap перед 
+LinkedHashMap в производительности на больших объемах данных.
+
+В App показаны примеры использования методов класса ArrayMap
 
 Синтаксис:
 
-  ### class ArrayMap<T, K> implements Iterable<T>
+  ### class ArrayMap<K, T> implements Iterable<T>
   
-  где: Т - параметр значений, K - параметр ключей
+  где: K - параметр ключей,  Т - параметр значений
 
 - -------------------------------------------------------------
 The ArrayMap class is a parameterized wrapped class,
-  created on the basis of two structures - ArrayList and HashMap.
-  It has dual features.
+created on the basis of two structures - ArrayList and LinkedHashMap.
 
-On the one hand, ArrayMap compared to HashMap has
-the following additional features:
-- ordering of the values of the elements of the Map. 
-- implementation of the iterable interface (with the ability 
-  to use a foreach loop over elements).
+ArrayMap compared to HashMap has the following additional 
+features:
 - accessing of the values of Map elements through indexes.
+- implementation of the iterable interface (with the ability 
+  to use a "for" loop over elements).
 
-On the other hand ArrayMap compared to ArrayList has the following
-additional features:
-- determining the existence of a list element by the value of
-  field key (with O(1) complexity).
-- determining the index of the list element by the value of the
-  field keys (with O(1) complexity).
- 
+As a result, ArrayMap is like LinkedHashMap but with faster
+  and convenient access to the values of the elements of Map.
+
+PerformanceTest demonstrates the advantage of ArrayMap over
+LinkedHashMap in performance on large amounts of data.
+
+App shows examples of using methods of the ArrayMap class.
+
 Syntax:
 
-  ### class ArrayMap<T, K> implements Iterable<T>
+  ### class ArrayMap<K, T> implements Iterable<T>
 
-  where: T - parameter of values, K - parameter of keys
+  where: K - parameter of keys, T - parameter of values

@@ -12,15 +12,15 @@ class ArrayMapTest {
 
     ArrayMap<String, Person> arrayMap = new ArrayMap<>();
 
-    Person person1 = new Person("Hemmer", "4917732567", 32);
-    Person person2 = new Person("Neitzel", "4915756322", 47);
-    Person person3 = new Person("Schwarz", "4917702870", 25);
+    Person person1 = new Person("Hemmer",  32);
+    Person person2 = new Person("Neitzel",  47);
+    Person person3 = new Person("Schwarz", 25);
 
     @BeforeEach
     void setUp() {
-        arrayMap.add("4917732567", person1 );
-        arrayMap.add("4915756322", person2);
-        arrayMap.add("4917702870", person3 );
+        arrayMap.put("4917732567", person1 );
+        arrayMap.put("4915756322", person2);
+        arrayMap.put("4917702870", person3 );
 
     }
 
@@ -29,27 +29,14 @@ class ArrayMapTest {
         arrayMap.clear();
     }
 
-
-    @Test
-    void add() {
-        arrayMap.add("4915502546", new Person("Brown", "4915502546", 28));
-        Assertions.assertEquals(4,arrayMap.size(),"Check Add");
-    }
-
-    @Test
-    void addIfKeyExist() {
-        arrayMap.add("4917732567", new Person("Brown", "4917732567", 28));
-        Assertions.assertEquals(3,arrayMap.size(),"Check Add If key exist");
-    }
-
     void put() {
-        arrayMap.put("4915502546", new Person("Brown", "4915502546", 28));
+        arrayMap.put("4915502546", new Person("Brown", 28));
         Assertions.assertEquals(4,arrayMap.size(),"Check Add");
     }
 
     @Test
     void putIfKeyExist() {
-        arrayMap.put("4917732567", new Person("Brown", "4917732567", 28));
+        arrayMap.put("4917732567", new Person("Brown", 28));
         Assertions.assertEquals(3,arrayMap.size(),"Check Add If key exist");
     }
 
@@ -73,7 +60,7 @@ class ArrayMapTest {
 
     @Test
     void set() {
-        arrayMap.set(1,new Person("Schulze", "4915502525", 30),"4915502525", "4915756322");
+        arrayMap.set(1,new Person("Schulze", 30),"4915502525", "4915756322");
         Assertions.assertFalse(arrayMap.contains("4915756322"));
         Assertions.assertTrue(arrayMap.contains("4915502525"));
     }
