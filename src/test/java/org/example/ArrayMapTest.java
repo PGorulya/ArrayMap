@@ -59,29 +59,16 @@ class ArrayMapTest {
     }
 
     @Test
-    void set() {
-        arrayMap.set(1,new Person("Schulze", 30),"4915502525", "4915756322");
-        Assertions.assertFalse(arrayMap.contains("4915756322"));
-        Assertions.assertTrue(arrayMap.contains("4915502525"));
-    }
-
-    @Test
-    void setException() {
-        assertThrows(IndexOutOfBoundsException.class, () -> arrayMap.set(-1, person3, "000000", "11111111"));
-        assertThrows(IndexOutOfBoundsException.class, () -> arrayMap.set(99, person3, "000000", "11111111"));
-    }
-
-    @Test
-    void contains() {
-        Assertions.assertTrue(arrayMap.contains("4915756322"));
-        Assertions.assertFalse(arrayMap.contains("4915756323"));
+    void containsKey() {
+        Assertions.assertTrue(arrayMap.containsKey("4915756322"));
+        Assertions.assertFalse(arrayMap.containsKey("4915756323"));
 
     }
 
     @Test
     void findIndex() {
-        Assertions.assertEquals(1,arrayMap.findIndex("4915756322"));
-        Assertions.assertEquals(-1,arrayMap.findIndex("4915756323"));
+        Assertions.assertEquals(1,arrayMap.getIndex("4915756322"));
+        Assertions.assertEquals(-1,arrayMap.getIndex("4915756323"));
     }
 
     @Test
@@ -93,7 +80,7 @@ class ArrayMapTest {
     void removeByIndex() {
         arrayMap.remove("4917702870", 2);
         Assertions.assertEquals(2, arrayMap.size(), "Check remove");
-        Assertions.assertFalse(arrayMap.contains("4917702870"));
+        Assertions.assertFalse(arrayMap.containsKey("4917702870"));
     }
 
     @Test

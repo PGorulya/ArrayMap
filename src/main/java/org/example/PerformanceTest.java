@@ -11,15 +11,15 @@ import java.util.Random;
 
 public class PerformanceTest {
     public static void main(String[] args) {
+        int maxElements = 100000;
         Faker faker = new Faker();
         Random rnd = new Random();
         // arrayMap is Map with Keys = "phone" and Values = "Person"
-        ArrayMap<String, Person> arrayMap = new ArrayMap<>();
+        ArrayMap<String, Person> arrayMap = new ArrayMap<>(maxElements);
         // LinkedHashMap is Map with Keys = "phone" and Values = "Person"
-        LinkedHashMap<String,Person> linkedHashMap = new LinkedHashMap<>();
+        LinkedHashMap<String,Person> linkedHashMap = new LinkedHashMap<>(maxElements);
 
         //Create arrayMap elements with random dates
-        int maxElements = 100000;
         int indexRnd = rnd.nextInt(0, maxElements);
         System.out.println("indexRnd = " + indexRnd);
         String phoneRnd = "";
