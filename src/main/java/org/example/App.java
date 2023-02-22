@@ -2,6 +2,7 @@ package org.example;
 
 import com.github.javafaker.Faker;
 
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 
@@ -42,7 +43,7 @@ public class App {
         arrayMap.remove(phoneRnd);
         System.out.println("Size after removing = " + arrayMap.size());
 
-        // Example of Using "for" cycle
+        // Example of Using "for-each" cycle
         // Search the element of arrayMap with max Age
         Person perMaxAge = arrayMap.get(0);
         for (Person pers : arrayMap) {
@@ -50,9 +51,19 @@ public class App {
         }
         System.out.println("Element with max Age: " + perMaxAge);
 
+        // Example use to_string
         System.out.println("=========================================================");
         System.out.println(arrayMap);
 
+        //Example use forEachRemaining
+        System.out.println("Example ForEachRemainding+++++++++++++++++++++++++++");
+        arrayMap.iterator().forEachRemaining(System.out::println);
+
+        //Example use for stream
+        System.out.println("Example Stream++++++++++++++++++++++++++++");
+        arrayMap.values().stream().filter(a->a.getAge()>50).forEach(System.out::println);
+        System.out.println("----------------------------------");
+        arrayMap.entrySet().stream().filter(a->a.getValue().getAge()>50).forEach(System.out::println);
 
     }
 }

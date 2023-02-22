@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 public class ArrayMap<K, T> implements Map<K, T>, Iterable<T> {
 
@@ -138,6 +139,11 @@ public class ArrayMap<K, T> implements Map<K, T>, Iterable<T> {
             @Override
             public T next() {
                 return elements.get(pointer++);
+            }
+
+            @Override
+            public void forEachRemaining(Consumer<? super T> action) {
+                Iterator.super.forEachRemaining(action);
             }
         };
     }
