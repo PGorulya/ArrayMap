@@ -3,8 +3,16 @@ package org.example;
 import java.util.*;
 import java.util.function.Consumer;
 
-//The class has two type parameters K and T which are used to define the types of the keys
-// and values in the map.
+/**
+ * ArrayMap is a map implementation that stores key-value pairs as a list of elements,
+ * and maintains a separate map that maps each key to the corresponding index in the list.
+ * This allows for O(1) access of elements.
+ * This class implements the Map interface, and also provides an iterator over the values
+ * in the map.
+ *
+ * @param <K> the type of keys in the map
+ * @param <T> the type of values in the map
+ */
 public class ArrayMap<K, T> implements Map<K, T>, Iterable<T> {
 
     // The list to store the elements in the map
@@ -16,21 +24,30 @@ public class ArrayMap<K, T> implements Map<K, T>, Iterable<T> {
     //The size field is used to keep track of the number of elements in the map.
     int size = 0;
 
-    // Constructs an empty ArrayMap with default initial capacity
+    /**
+     * Constructs an empty ArrayMap with default initial capacity.
+     */
     public ArrayMap() {
         elements = new ArrayList<>();
         mapElements = new LinkedHashMap<>();
     }
 
-    // Constructs an empty ArrayMap with the specified initial capacity
+    /**
+     * Constructs an empty ArrayMap with the specified initial capacity.
+     * @param initialCapacity the initial capacity of the ArrayMap.
+     */
     public ArrayMap(int initialCapacity) {
         elements = new ArrayList<>(initialCapacity);
         mapElements = new LinkedHashMap<>(initialCapacity);
     }
 
-    // Associates the specified value with the specified key in this map.
-    // If the map previously contained a mapping for the key, the old value is replaced by the specified value.
-    // Returns the previous value associated with key, or null if there was no mapping for key.
+    /**
+     * Associates the specified value with the specified key in this map.
+     * If the map previously contained a mapping for the key, the old value is replaced by the specified value.
+     * @param key the key with which the specified value is to be associated
+     * @param value the value to be associated with the specified key
+     * @return the previous value associated with key, or null if there was no mapping for key.
+     */
     @Override
     public T put(K key, T value) {
         T oldVal = null;
@@ -48,7 +65,11 @@ public class ArrayMap<K, T> implements Map<K, T>, Iterable<T> {
         return oldVal;
     }
 
-    // Returns the value to which the specified key is mapped, or null if this map contains no mapping for the key.
+    /**
+     * Returns the value to which the specified key is mapped, or null if this map contains no mapping for the key.
+     * @param key the key whose associated value is to be returned
+     * @return the value to which the specified key is mapped, or null if this map contains no mapping for the key.
+     */
     @Override
     public T get(Object key) {
         // Get the index of the key in the list from the map
@@ -57,7 +78,13 @@ public class ArrayMap<K, T> implements Map<K, T>, Iterable<T> {
         return (ind == -1) ? null : elements.get(ind);
     }
 
-    // Returns the value at the specified index in the list
+
+    /**
+     * Returns the value at the specified index in the list.
+     * @param index the index of the value to return
+     * @return the value at the specified index in the list.
+     * @throws IndexOutOfBoundsException if the index is out of range.
+     */
     public T get(Integer index) {
         // If the index is out of bounds, throw an exception; otherwise, return the value at the index
         if (index < 0 || index > size) {
@@ -70,8 +97,12 @@ public class ArrayMap<K, T> implements Map<K, T>, Iterable<T> {
         return mapElements.getOrDefault(key, -1);
     }
 
-    // Removes the mapping for a key from this map if it is present.
-    // Returns the previous value associated with key, or null if there was no mapping for key.
+    /**
+     * Removes the mapping for a key from this map if it is present.
+     *
+     * @param key the key whose mapping is to be removed from the map
+     * @return the previous value associated with key, or null if there was no mapping for key
+     */
     @Override
     public T remove(Object key) {
         Integer index = mapElements.remove(key);
@@ -90,7 +121,11 @@ public class ArrayMap<K, T> implements Map<K, T>, Iterable<T> {
         }
     }
 
-    // inserts all key-value pairs from the given map into this map.
+    /**
+     * Inserts all key-value pairs from the given map into this map.
+     *
+     * @param m the map whose key-value pairs are to be inserted into this map
+     */
     @Override
     public void putAll(Map<? extends K, ? extends T> m) {
         for (Entry<? extends K, ? extends T> entry : m.entrySet()) {
@@ -98,30 +133,52 @@ public class ArrayMap<K, T> implements Map<K, T>, Iterable<T> {
         }
     }
 
-    // returns true if the map contains the given key, false otherwise.
+
+    /**
+     * Returns true if the map contains the given key, false otherwise.
+     *
+     * @param key the key to be checked for presence in the map
+     * @return true if the map contains the given key, false otherwise
+     */
     @Override
     public boolean containsKey(Object key) {
         return mapElements.containsKey(key);
     }
 
-    // returns true if the map contains the given value, false otherwise.
+    /**
+     * Returns true if the map contains the given value, false otherwise.
+     *
+     * @param value the value to be checked for presence in the map
+     * @return true if the map contains the given value, false otherwise
+     */
     @Override
     public boolean containsValue(Object value) {
         return elements.contains(value);
     }
 
-    // returns the number of elements in the map.
+    /**
+     * Returns the number of elements in the map.
+     *
+     * @return the number of elements in the map
+     */
     @Override
     public int size() {
         return size;
     }
 
-    // returns true if the map is empty, false otherwise.
+    /**
+     * Returns true if the map is empty, false otherwise.
+     *
+     * @return true if the map is empty, false otherwise
+     */
     @Override
     public boolean isEmpty() {
         return size == 0;
     }
-    // removes all key-value pairs from the map.
+
+    /**
+     * removes all key-value pairs from the map.
+     */
     @Override
     public void clear() {
         elements.clear();
@@ -129,7 +186,11 @@ public class ArrayMap<K, T> implements Map<K, T>, Iterable<T> {
         size = 0;
     }
 
-    // returns an unmodifiable set of the keys in the map.
+    /**
+     * returns an unmodifiable set of the keys in the map.
+     *
+     * @return an unmodifiable set of the keys in the map.
+     */
     @Override
     public Set<K> keySet() {
         return Collections.unmodifiableSet(mapElements.keySet());

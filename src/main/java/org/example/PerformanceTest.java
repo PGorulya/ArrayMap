@@ -2,39 +2,41 @@ package org.example;
 
 import com.github.javafaker.Faker;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 // Performance test ArrayMap vs. LinkedHashMap
 
 public class PerformanceTest {
     public static void main(String[] args) {
-        int maxElements = 100000;
+        int maxElements = 1000000;
         Faker faker = new Faker();
         Random rnd = new Random();
         // arrayMap is Map with Keys = "phone" and Values = "Person"
         ArrayMap<String, Person> arrayMap = new ArrayMap<>(maxElements);
-        // LinkedHashMap is Map with Keys = "phone" and Values = "Person"
-        LinkedHashMap<String,Person> linkedHashMap = new LinkedHashMap<>(maxElements);
+        // HashMap is Map with Keys = "phone" and Values = "Person"
+        HashMap<String,Person> hashMap = new HashMap<>(maxElements);
 
         //Create arrayMap elements with random dates
         int indexRnd = rnd.nextInt(0, maxElements);
         System.out.println("indexRnd = " + indexRnd);
         String phoneRnd = "";
         String phone;
+        String lastname;
+        int age;
         for (int i = 0; i < maxElements; i++) {
             phone = faker.phoneNumber().cellPhone();
             if (i == indexRnd) phoneRnd = phone;
+            lastname = faker.name().lastName();
+            age = rnd.nextInt(10, 90);
             // arrayMap is Map of Keys = "phone" and values = "Person"
-            arrayMap.put(phone, (new Person(faker.name().lastName(), rnd.nextInt(15, 80))));
+            arrayMap.put(phone, (new Person(lastname, age)));
 
-            // linkedHashMap is Map of Keys = "phone" and values = "Person"
-            linkedHashMap.put(phone, (new Person(faker.name().lastName(), rnd.nextInt(15, 80))));
+            // hashMap is Map of Keys = "phone" and values = "Person"
+            hashMap.put(phone, (new Person(lastname, age)));
         }
 
         System.out.println("Size of arrayMap = " + arrayMap.size());
+        System.out.println("Size of hashMap = " + hashMap.size());
         System.out.println("=========================================================");
 
         // Example1 for arrayMap:
@@ -42,7 +44,9 @@ public class PerformanceTest {
         long start = System.currentTimeMillis();
         Person perMaxAge = arrayMap.get(phoneRnd);
         for (Person pers : arrayMap) {
-            if (perMaxAge.getAge() <= pers.getAge()) perMaxAge = pers;
+            if (perMaxAge.getAge() <= pers.getAge()) {
+                perMaxAge = pers;
+            }
         }
         long end = System.currentTimeMillis();
         System.out.println("Time of searching for arrayMap = " + (end -start));
@@ -50,21 +54,21 @@ public class PerformanceTest {
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 
         System.out.println("=========================================================");
-        System.out.println("Size of linkedHashMap = " + linkedHashMap.size());
 
-        // Example1 for LinkedHashMap
+        // Example1 for HashMap
         // Search the element with max Age and index of that element
+
         start = System.currentTimeMillis();
-        Person perMaxAge1 = linkedHashMap.get(phoneRnd);
-        List<String> listPhones = new ArrayList<>(linkedHashMap.keySet());
-        for(String phon: listPhones) {
-            if( perMaxAge1.getAge() <= linkedHashMap.get(phon).getAge()) {
-                perMaxAge1 = linkedHashMap.get(phon);
+        Person perMaxAge1 = hashMap.get(phoneRnd);
+        List<Person> listPers = new ArrayList<>(hashMap.values());
+        for(Person person: listPers) {
+            if ( perMaxAge1.getAge() <= person.getAge()) {
+                perMaxAge1 = person;
             }
         }
         end = System.currentTimeMillis();
-        System.out.println("Time of searching for linkedHashMap = " + (end - start));
-        System.out.println("Element with max Age (in linkedHashMap): " + perMaxAge1);
+        System.out.println("Time of searching for hashMap = " + (end - start));
+        System.out.println("Element with max Age (in hashMap): " + perMaxAge1);
 
     }
 }
